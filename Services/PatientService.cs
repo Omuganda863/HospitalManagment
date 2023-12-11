@@ -28,17 +28,31 @@ namespace HospitalManagementSystem.Services
 
         public string DeletePatientName(int id, Context dc)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var patient = dc.Patients.Where(patient => patient.PatientID == patientId).FirstOrDefault();
+
+                if (patient != null)
+                {
+                    context.Patients.Remove(patient);
+                    context.SaveChanges();
+                    Console.WriteLine("Patient Deleted");
+                    return;
+                }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public List<Patient> GetAllPatients(Context dc, Patient patient)
         {
-            throw new NotImplementedException();
+            var list = dc.Patients.ToList();
         }
 
         public Patient GetPatientById(int id, Context dc)
         {
-            throw new NotImplementedException();
+            var patient = dc.Patients.ToList().Find(patient => patient.PatientID == id) ?? null;
         }
     }
 }
